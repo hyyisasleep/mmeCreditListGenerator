@@ -165,6 +165,8 @@ class DetailedDialog(QDialog):
     def resizeEvent(self, event):
         # super().resizeEvent(event)
         self.table_widget.resize(self.width(), self.height())
+        # 发现不用写 呃呃
+
         # print(f"拖拽后尺寸:宽{self.width()},高{self.height()}")
         # # 之前的总列宽
         # prev_col_width = sum([self.table_widget.columnWidth(i)
