@@ -3,18 +3,17 @@ from typing import TextIO
 
 import dialogs
 import ui_mainWindow
+import ghost_icon_rc
 
-
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 import os
 from tkinter import Tk, filedialog
 
-
-
 lib_name = "lib.csv"
 
 
-def get_mme_item(dirname,filename,writer) -> dict:
+def get_mme_item(dirname, filename, writer) -> dict:
     return {"dirname": dirname, "filename": filename, "writer": writer}
 
 
@@ -31,6 +30,15 @@ class MainWindow(QMainWindow):
         # 初始化界面 来自qt designer和pyuic
         self.ui = ui_mainWindow.Ui_mainWindow()
         self.ui.setupUi(self)
+
+
+
+        # icon = QIcon()
+        # icon.addPixmap(QPixmap('ghost_white.png'))
+        # “:/icon.png” 是从编译后的 .qrc 文件中加载图标的语法
+        # https://blog.csdn.net/qq_42750240/article/details/131141491
+        self.setWindowIcon(QIcon(":/ghost_white.png"))
+
         self.encode = self.code_gb18030
         # 字典列表，读取lib.csv
         self.library = list()
@@ -105,7 +113,7 @@ class MainWindow(QMainWindow):
             return ""
         return file_path
 
- # 读取emm文件的槽
+    # 读取emm文件的槽
     def read_emm_files(self):
         file_path = self.get_file_path()
         if file_path == "":
@@ -118,7 +126,7 @@ class MainWindow(QMainWindow):
         self.datas.clear()
         self.wait_data_list.clear()
         self.ui.emm_filename_browser.clear()
-        
+
         self.exec(file_path)
 
         if self.show_add_labels is False:
@@ -127,7 +135,7 @@ class MainWindow(QMainWindow):
             self.ui.emm_filename_browser.show()
             self.show_add_labels = True
 
-# 追加emm文件的槽
+    # 追加emm文件的槽
     def add_emm_files(self):
         file_path = self.get_file_path()
         if file_path == "":
@@ -135,8 +143,8 @@ class MainWindow(QMainWindow):
         # print(self.library)
         self.exec(file_path)
 
-# 读取和追加共用的流程，读emm写表
-    def exec(self,file_path:str):
+    # 读取和追加共用的流程，读emm写表
+    def exec(self, file_path: str):
 
         # 打开emm，先用gb18030读，不行再用shift-jis
         try:
@@ -146,7 +154,7 @@ class MainWindow(QMainWindow):
 
         except Exception as e0:
             print(f"Can't open file as UTF-8,Exception:{e0}")
-            QMessageBox.information(self,"提示", "尝试用中文编码打开时出现乱码\n改为使用日文编码", QMessageBox.Close)
+            QMessageBox.information(self, "提示", "尝试用中文编码打开时出现乱码\n改为使用日文编码", QMessageBox.Close)
             try:
                 with open(file_path, 'r', encoding='shift-JIS') as emm_file:
                     # self.encode = self.code_shift_jis
@@ -163,10 +171,6 @@ class MainWindow(QMainWindow):
             self.gen_waiting_list()
 
         self.write_lib()
-
-
-
-
 
     def emm_file_analysis(self, emm_file: TextIO):
         self.ui.emm_filename_browser.append(emm_file.name)
@@ -224,22 +228,19 @@ class MainWindow(QMainWindow):
 
                 dialog.destroy()
 
-
-    def is_path_match(self,ab_dir_name,item_dir_name) -> bool:
+    def is_path_match(self, ab_dir_name, item_dir_name) -> bool:
         # 库中存的是绝对路径
         if os.path.isabs(item_dir_name):
             return item_dir_name == ab_dir_name
-        #相对
+        # 相对
         item_dirs = item_dir_name.split("\\")
         ab_dirs = ab_dir_name.split("\\")
         # 只有一级相对文件名，取最后一级
 
-        for i in range(min(len(item_dirs),len(ab_dirs))):
-            if item_dirs[-(i+1)] != ab_dirs[-(i+1)]:
+        for i in range(min(len(item_dirs), len(ab_dirs))):
+            if item_dirs[-(i + 1)] != ab_dirs[-(i + 1)]:
                 return False
         return True
-
-
 
     def dialog_info_handler(self, code: int, dirname: str, filename: str, writer: str):
         print("get Code:" + str(code))
@@ -261,9 +262,10 @@ class MainWindow(QMainWindow):
             print("忽略本项")
             pass
 
-    def add_item_to_lib(self,it:dict):
+    def add_item_to_lib(self, it: dict):
         self.library.append(it)
         self.library_changed_flag = True
+
     # 把作者名（可能多个）加入list
     # def add_writer_to_list(self, writer_str: str):
     #     writers = writer_str.split(",")
@@ -285,8 +287,7 @@ class MainWindow(QMainWindow):
     def gen_waiting_list(self):
         wait_data_result = ""
         for data in self.wait_data_list:
-
-            wait_data_result += data["dirname"]+"\t"+data["filename"]+"\n"
+            wait_data_result += data["dirname"] + "\t" + data["filename"] + "\n"
             # wait_data_result +=
         if wait_data_result != "":
             self.ui.not_handle_browser.setText(wait_data_result)
@@ -297,7 +298,8 @@ class MainWindow(QMainWindow):
             #     self.ui.not_handle_browser.setText(str(encode_result))
             # except Exception as e:
             #     print(e)
-# 写了好像没用的乱码转换，先放着
+
+    # 写了好像没用的乱码转换，先放着
     #
     #
     # def wait_list_encode_to_jis(self):
@@ -318,6 +320,33 @@ class MainWindow(QMainWindow):
             root.clipboard_append(result)
             root.destroy()
 
+    def copy_details_event(self):
+
+        result_dict = {}
+
+        for data in self.datas:
+            writer = data["writer"]
+            dirname = data["dirname"]
+
+            # 处理一下dirname，路径存的是\但是作者名是/，好弱智
+            dirname = dirname.replace("\\","/")
+            # 不知道会不会有绝对路径
+            if writer not in result_dict.keys():
+                result_dict[writer] = dirname
+            else:
+                if dirname not in result_dict[writer]:
+                    result_dict[writer] += '\n\t' + dirname
+        if result_dict:
+            result = ''
+            for key in result_dict:
+                result += key + ':\n\t' + result_dict[key] + '\n\n'
+            print(result)
+            QMessageBox.information(self, '提示', '复制详细列表成功', QMessageBox.Close)
+            root = Tk()
+            # # 复制到剪贴板
+            root.clipboard_append(result)
+            root.destroy()
+
     def print_detailed_info(self):
         detailed_info_dialog = dialogs.DetailedDialog(self.datas)
         detailed_info_dialog.exec()
@@ -327,9 +356,6 @@ class MainWindow(QMainWindow):
             self.gen_writer_list()
             self.write_lib()
         detailed_info_dialog.destroy()
-
-
-
 
     # def read_filter_prefix(self):
     #     try:
@@ -341,6 +367,6 @@ class MainWindow(QMainWindow):
     #     except FileNotFoundError as e:
     #         # 没单独设文档，默认添加如下
     #         print("无文档，采用默认设置")
-            # self.filter_prefix = ["ikClut", "PostMovie", "ScreenTex", "o_Tonemap", "Drop Colors",
-            #                       "1color 1.1_winglayer"]
-        # print(self.filter_prefix)
+    # self.filter_prefix = ["ikClut", "PostMovie", "ScreenTex", "o_Tonemap", "Drop Colors",
+    #                       "1color 1.1_winglayer"]
+    # print(self.filter_prefix)

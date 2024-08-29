@@ -1,8 +1,9 @@
 import os
-from PyQt5.QtGui import QCloseEvent, QColor
-from PyQt5.QtWidgets import QDialog, QMessageBox, QTableWidget, QTableWidgetItem, QAbstractItemView
-import ui_dialog
 
+from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QCloseEvent, QColor
+from PyQt5.QtWidgets import QDialog, QMessageBox, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView
+import ui_dialog
 
 code_wait_handle = 0
 code_add_item = 1
@@ -29,8 +30,10 @@ class AddDialog(QDialog):
         self.ui.file_text_edit.setPlainText(self.filename)
 
         # self.ui.wait_handle_button.clicked.emit(code_wait_handle)
+
     def closeEvent(self, event: QCloseEvent):
-        result = QMessageBox.question(self, "标题", "确定关闭吗?输入框中的修改不会生效", QMessageBox.Yes | QMessageBox.No)
+        result = QMessageBox.question(self, "标题", "确定关闭吗?输入框中的修改不会生效",
+                                      QMessageBox.Yes | QMessageBox.No)
         if result == QMessageBox.Yes:
             self.dirname = self.init_dir
             self.filename = self.init_file
@@ -76,9 +79,10 @@ class AddDialog(QDialog):
         self.filename = self.init_file
         self.writer = ""
         self.accept()
-        
-        
+
+
 class DetailedDialog(QDialog):
+
     def __init__(self, datas: list):
         super().__init__()
         self.choose_item_flag = None
@@ -89,35 +93,101 @@ class DetailedDialog(QDialog):
         # 记录改了哪条
         self.rewrite_flag = False
         self.delete_flag = False
-        self.resize(860, 400)
+
+        self.resize(1000, 400)
+
         self.setWindowTitle("详细信息表")
         row = len(datas)
         self.table_widget = QTableWidget(row, 4, self)
-        self.table_widget.setHorizontalHeaderLabels(['MME文件', '作者', '文件路径','操作'])
+        self.table_widget.setHorizontalHeaderLabels(['MME文件', '作者', '文件路径', '操作'])
         # 只允许单选不许ctrl+a/shift/ctrl
         self.table_widget.setSelectionMode(QAbstractItemView.SingleSelection)
+
+        # 录入数据
         cnt = 0
         for data in self.datas:
             self.table_widget.setItem(cnt, 0, QTableWidgetItem(data["filename"]))
             self.table_widget.setItem(cnt, 1, QTableWidgetItem(data["writer"]))
             self.table_widget.setItem(cnt, 2, QTableWidgetItem(data["dirname"]))
             item = QTableWidgetItem("删除该行")
-            item.setBackground(QColor(200,200,200))
+            item.setBackground(QColor(200, 200, 200))
             self.table_widget.setItem(cnt, 3, item)
             cnt += 1
-        # self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table_widget.resize(self.width(), self.height())
-        self.table_widget.setColumnWidth(0,250)
-        self.table_widget.setColumnWidth(1, 200)
-        self.table_widget.setColumnWidth(2, 250)
-        self.table_widget.setColumnWidth(3, 100)
+
         self.table_widget.cellChanged.connect(self.CellChanged)
         # 修改完成后发射此信号
         self.table_widget.cellDoubleClicked.connect(self.CellDoubleClicked)
-        # 双击单元格即开始修改单元格是发射此信号
+        # 渲染完了再显示
+        self.setVisible(False)
 
-    def CellChanged(self,row,col):
-        #读取当前内容，有变化就写进新的备份数据里
+    def adjust_and_show(self):
+        # scroll_bar_width = self.table.verticalScrollBar().width()
+        # print(f"Vertical scrollbar width after showing: {scroll_bar_width} pixels")
+        #
+        # # 根据滚动条宽度调整窗口大小
+        # desired_width = self.table.width() + scroll_bar_width
+        # self.resize(desired_width, self.height())
+        # print(f"New window width: {desired_width} pixels")
+        total_width = 0
+        for i in range(self.table_widget.columnCount()):
+            content_width = max(self.table_widget.sizeHintForColumn(i),100)  # 最小宽度为50
+
+            # sizeHint 根据内容调整宽度
+            self.table_widget.setColumnWidth(i, int(content_width))
+            total_width += content_width
+        print(f"四行宽度:{total_width}")
+
+        total_width += self.table_widget.verticalHeader().width()
+        print(f"加上表头宽度:{total_width}")
+
+        # scroll_bar_range = (self.table_widget.verticalScrollBar().maximum()
+        #                     - self.table_widget.verticalScrollBar().minimum())
+        # if scroll_bar_range > 0:
+        if self.table_widget.verticalScrollBar().isVisible():
+            # 滚动条宽度默认100，得在渲染完成后才能调整到合适宽度
+            # 来自gpt，所以用了showEvent，先在init渲染了个800*400再显示
+            total_width += self.table_widget.verticalScrollBar().width()
+            print(f"加上滚动条宽度:{total_width}")
+        self.resize(total_width+2, self.height())
+        # 调整完成后再显示窗口
+        self.setVisible(True)
+
+    # 双击单元格即开始修改单元格是发射此信号
+
+    def showEvent(self, event):
+        # self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.table_widget.resize(self.width(), self.height())
+        super().showEvent(event)
+        # 使用 QTimer 延迟调整大小，然后再显示窗口
+        QTimer.singleShot(0, self.adjust_and_show)
+
+
+    def resizeEvent(self, event):
+        # super().resizeEvent(event)
+        self.table_widget.resize(self.width(), self.height())
+        # print(f"拖拽后尺寸:宽{self.width()},高{self.height()}")
+        # # 之前的总列宽
+        # prev_col_width = sum([self.table_widget.columnWidth(i)
+        #                       for i in range(self.table_widget.columnCount())])
+        # print(f"之前的总列宽：{prev_col_width}")
+        # cur_col_width = self.width() - self.table_widget.verticalHeader().width()
+        #
+        # print(f"re：减去表头宽度:{cur_col_width}")
+        # scroll_bar_range = self.table_widget.verticalScrollBar().maximum() - self.table_widget.verticalScrollBar().minimum()
+        #
+        # if scroll_bar_range > 0:
+        #     cur_col_width -= self.table_widget.verticalScrollBar().width()
+        #     # 不是为啥是height啊，测了一下宽100高30，用高反而是更贴近的
+        #     print(f"re：减去滚动条宽度:{cur_col_width}")
+        #
+        # for i in range(self.table_widget.columnCount()):
+        #     content_width = self.table_widget.columnWidth(i)  # 最小50
+        #     self.table_widget.setColumnWidth(i, max(50,
+        #                                             int(content_width / prev_col_width * cur_col_width)-1))
+
+
+    def CellChanged(self, row, col):
+        # 读取当前内容，有变化就写进新的备份数据里
         text = self.table_widget.item(row, col).text()
         if col < 3:
             colname = ""
@@ -139,13 +209,13 @@ class DetailedDialog(QDialog):
         self.choose_item_flag = False
         # 修改完成
 
-    def CellDoubleClicked(self,row,col):
+    def CellDoubleClicked(self, row, col):
         self.choose_item_flag = True
         if col == 3:
 
             r = QMessageBox.information(
                 self, "提示", f"确定删除 {self.table_widget.item(row, 0).text()} 这项吗？", QMessageBox.Yes,
-                                        QMessageBox.No)
+                QMessageBox.No)
 
             if r == QMessageBox.Yes:
                 self.table_widget.removeRow(row)
@@ -156,11 +226,6 @@ class DetailedDialog(QDialog):
 
         # 开始修改
 
-    def resizeEvent(self, event):
-        self.table_widget.resize(self.width(), self.height())
-        pass
-
-
     def closeEvent(self, event):
         if self.choose_item_flag:
             # 正在修改中
@@ -169,12 +234,12 @@ class DetailedDialog(QDialog):
 
         if self.rewrite_flag is True or self.delete_flag is True:
             r = QMessageBox.information(self, "提示", "退出前要保存修改吗？", QMessageBox.Yes,
-                                    QMessageBox.No)
+                                        QMessageBox.No)
 
             if r == QMessageBox.Yes:
-                for i in range( self.table_widget.rowCount()):
+                for i in range(self.table_widget.rowCount()):
                     for j in range(3):
-                        item = self.table_widget.item(i,j)
+                        item = self.table_widget.item(i, j)
                         if j == 0:
                             self.datas[i]["filename"] = item.text()
                         elif j == 1:

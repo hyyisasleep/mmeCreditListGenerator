@@ -17,7 +17,12 @@ shutil.copy("ui_dialog.py",path + "/ui_dialog.py")
 # https://blog.csdn.net/tb_youth/article/details/105754733
 # https://xiaokang2022.blog.csdn.net/article/details/127585881
 # 最终执行命令： 然后去暴力删包！
-# pyinstaller -D -w .\main.py
+# 有个internal，要求pyinstaller版本6.0往上
+# pyinstaller -D -w -i "ghost.ico" .\main.py
+
+
+# 没有internal 38M大的exe，但是启动速度要慢一点
+# pyinstaller -F -w -i "ghost.ico" .\main.py
 
 
 # 暴力瘦身法

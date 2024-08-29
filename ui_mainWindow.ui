@@ -160,6 +160,20 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="copy_detailed_results_button">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>340</y>
+      <width>141</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>复制mme名列表
+到剪贴板</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
@@ -229,6 +243,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>copy_detailed_results_button</sender>
+   <signal>clicked()</signal>
+   <receiver>mainWindow</receiver>
+   <slot>copy_details_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>693</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>740</x>
+     <y>400</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -238,5 +268,6 @@
   <slot>wait_list_encode_to_jis()</slot>
   <slot>wait_list_encode_to_gb()</slot>
   <slot>add_emm_files()</slot>
+  <slot>copy_details_event()</slot>
  </slots>
 </ui>

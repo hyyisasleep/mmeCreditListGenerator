@@ -57,6 +57,9 @@ class Ui_mainWindow(object):
         self.emm_filename_browser = QtWidgets.QTextBrowser(self.centralwidget)
         self.emm_filename_browser.setGeometry(QtCore.QRect(100, 180, 521, 41))
         self.emm_filename_browser.setObjectName("emm_filename_browser")
+        self.copy_detailed_results_button = QtWidgets.QPushButton(self.centralwidget)
+        self.copy_detailed_results_button.setGeometry(QtCore.QRect(640, 340, 141, 51))
+        self.copy_detailed_results_button.setObjectName("copy_detailed_results_button")
         mainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(mainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -67,6 +70,7 @@ class Ui_mainWindow(object):
         self.copy_button.clicked.connect(mainWindow.copy_event) # type: ignore
         self.detailed_results_button.clicked.connect(mainWindow.print_detailed_info) # type: ignore
         self.add_emm_button.clicked.connect(mainWindow.add_emm_files) # type: ignore
+        self.copy_detailed_results_button.clicked.connect(mainWindow.copy_details_event) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def retranslateUi(self, mainWindow):
@@ -80,3 +84,5 @@ class Ui_mainWindow(object):
         self.copy_button.setText(_translate("mainWindow", "复制到剪贴板"))
         self.emm_name_label.setText(_translate("mainWindow", "读取文件:"))
         self.add_emm_button.setText(_translate("mainWindow", "追加emm文件"))
+        self.copy_detailed_results_button.setText(_translate("mainWindow", "复制mme名列表\n"
+"到剪贴板"))
