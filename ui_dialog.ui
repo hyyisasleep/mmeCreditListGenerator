@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>743</width>
+    <height>461</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MME录入</string>
+  </property>
+  <widget class="QLabel" name="tips_label">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>381</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>未能识别该项，请自行修改以下信息：</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>701</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="text_layout" stretch="0,0,0,0,0,0">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="sizeConstraint">
+     <enum>QLayout::SetNoConstraint</enum>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="dirname_label">
+      <property name="text">
+       <string>文件目录名：</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::PlainText</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="dir_text_edit">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>87</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="filename_label">
+      <property name="text">
+       <string>MME名：</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="file_text_edit">
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="writer_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;作者名：（如有多个作者中间请用“/”分割）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="writer_text_edit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>260</y>
+     <width>361</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="choice_layout">
+    <item row="2" column="0">
+     <widget class="QPushButton" name="open_dir_button">
+      <property name="text">
+       <string>打开文件目录（有乱码会打不开）</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="add_item_button">
+      <property name="text">
+       <string>添加至库中</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QPushButton" name="reset_text_button">
+      <property name="text">
+       <string>还原为默认内容</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QPushButton" name="wait_handle_button">
+      <property name="text">
+       <string>稍后处理</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="cancel_button">
+      <property name="text">
+       <string>这是场景/模型文件，忽略</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cancel_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>ignore_item()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>462</x>
+     <y>367</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>597</x>
+     <y>380</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>open_dir_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>open_dir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>502</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>add_item_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>add_item()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>511</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wait_handle_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>wait_handle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>494</x>
+     <y>416</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>595</x>
+     <y>427</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reset_text_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reset_text()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>387</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>574</x>
+     <y>392</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>open_dir()</slot>
+  <slot>add_item()</slot>
+  <slot>wait_handle()</slot>
+  <slot>reset_text()</slot>
+  <slot>ignore_item()</slot>
+ </slots>
+</ui>

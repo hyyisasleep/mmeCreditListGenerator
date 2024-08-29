@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>自动生成mme借物列表：</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <widget class="QPushButton" name="read_emm_button">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>读取emm文件</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="result_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>230</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>生成结果:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="not_classify_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>340</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>未识别的mme/场景/模型，请检查一下:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="detailed_results_button">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>300</y>
+      <width>141</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>详细信息</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="help_label">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>10</y>
+      <width>571</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;使用说明&lt;/p&gt;&lt;p&gt;1.←读入.emm文件，注意是.emm不是.pmm&lt;/p&gt;&lt;p&gt;2.下方出现生成结果，如有错误请在右边详细信息窗口修改&lt;/p&gt;&lt;p&gt;3.在生成过程中发现未登记的mme会弹出窗口，请编辑信息后选择是否录入&lt;/p&gt;&lt;p&gt;程序会把模型和场景文件一起识别，请自行选择忽略&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="result_browser">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>260</y>
+      <width>601</width>
+      <height>61</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="copy_button">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>260</y>
+      <width>141</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>复制到剪贴板</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="not_handle_browser">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>370</y>
+      <width>601</width>
+      <height>201</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="emm_name_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>71</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>读取文件:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="add_emm_button">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>100</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>追加emm文件</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="emm_filename_browser">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>180</y>
+      <width>521</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>read_emm_button</sender>
+   <signal>clicked()</signal>
+   <receiver>mainWindow</receiver>
+   <slot>read_emm_files()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>95</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>copy_button</sender>
+   <signal>clicked()</signal>
+   <receiver>mainWindow</receiver>
+   <slot>copy_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>695</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>733</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>detailed_results_button</sender>
+   <signal>clicked()</signal>
+   <receiver>mainWindow</receiver>
+   <slot>print_detailed_info()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>734</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>734</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>add_emm_button</sender>
+   <signal>clicked()</signal>
+   <receiver>mainWindow</receiver>
+   <slot>add_emm_files()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>132</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>21</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>signal1()</signal>
+  <slot>read_emm_files()</slot>
+  <slot>copy_event()</slot>
+  <slot>print_detailed_info()</slot>
+  <slot>wait_list_encode_to_jis()</slot>
+  <slot>wait_list_encode_to_gb()</slot>
+  <slot>add_emm_files()</slot>
+ </slots>
+</ui>
