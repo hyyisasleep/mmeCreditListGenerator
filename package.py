@@ -9,7 +9,7 @@ path = "v1-2"
 os.makedirs(path,exist_ok=True)
 shutil.copy("main.py",path + "/main.py")
 shutil.copy("mainWindow.py",path + "/mainWindow.py")
-shutil.copy("dialogs.py",path + "/dialogs.py")
+shutil.copy("addDialog.py", path + "/dialogs.py")
 shutil.copy("ui_mainWindow.py",path + "/ui_mainWindow.py")
 shutil.copy("ui_dialog.py",path + "/ui_dialog.py")
 
@@ -18,7 +18,7 @@ shutil.copy("ui_dialog.py",path + "/ui_dialog.py")
 # https://xiaokang2022.blog.csdn.net/article/details/127585881
 # 最终执行命令： 然后去暴力删包！
 # 有个internal，要求pyinstaller版本6.0往上
-# pyinstaller -D -w -i "ghost.ico" .\main.py
+# pyinstaller -D -w -i "ghost.ico" --name=双击运行我.exe .\main.py
 
 
 # 没有internal 38M大的exe，但是启动速度要慢一点

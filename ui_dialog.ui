@@ -35,7 +35,7 @@
      <x>20</x>
      <y>60</y>
      <width>701</width>
-     <height>191</height>
+     <height>181</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="text_layout" stretch="0,0,0,0,0,0">
@@ -110,6 +110,13 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="choice_layout">
+    <item row="1" column="0">
+     <widget class="QPushButton" name="cancel_button">
+      <property name="text">
+       <string>这是场景/模型文件，忽略</string>
+      </property>
+     </widget>
+    </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="open_dir_button">
       <property name="text">
@@ -128,20 +135,6 @@
      <widget class="QPushButton" name="reset_text_button">
       <property name="text">
        <string>还原为默认内容</string>
-      </property>
-     </widget>
-    </item>
-    <item row="9" column="0">
-     <widget class="QPushButton" name="wait_handle_button">
-      <property name="text">
-       <string>稍后处理</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="cancel_button">
-      <property name="text">
-       <string>这是场景/模型文件，忽略</string>
       </property>
      </widget>
     </item>
@@ -195,22 +188,6 @@
     <hint type="destinationlabel">
      <x>599</x>
      <y>345</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>wait_handle_button</sender>
-   <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
-   <slot>wait_handle()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>494</x>
-     <y>416</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>595</x>
-     <y>427</y>
     </hint>
    </hints>
   </connection>

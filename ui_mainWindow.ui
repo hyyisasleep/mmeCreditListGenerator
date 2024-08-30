@@ -63,7 +63,7 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>300</y>
+      <y>260</y>
       <width>141</width>
       <height>28</height>
      </rect>
@@ -105,13 +105,13 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>260</y>
+      <y>370</y>
       <width>141</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>复制到剪贴板</string>
+     <string>复制作者列表</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="not_handle_browser">
@@ -164,14 +164,26 @@
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>340</y>
+      <y>420</y>
       <width>141</width>
-      <height>51</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>复制mme名列表
-到剪贴板</string>
+     <string>复制mme名列表</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="copy_detailed_results_button_2">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>320</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>复制借物表格式</string>
     </property>
    </widget>
   </widget>
@@ -259,6 +271,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>copy_detailed_results_button_2</sender>
+   <signal>clicked()</signal>
+   <receiver>mainWindow</receiver>
+   <slot>copy_credit_list_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>702</x>
+     <y>457</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>750</x>
+     <y>497</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -269,5 +297,6 @@
   <slot>wait_list_encode_to_gb()</slot>
   <slot>add_emm_files()</slot>
   <slot>copy_details_event()</slot>
+  <slot>copy_credit_list_event()</slot>
  </slots>
 </ui>

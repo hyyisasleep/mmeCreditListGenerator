@@ -1,4 +1,4 @@
-import os
+
 import sys
 from PyQt5.QtWidgets import QApplication
 import mainWindow
@@ -14,3 +14,10 @@ if __name__ == '__main__':
 # qt designer 教程
 # https://blog.csdn.net/weixin_40883833/article/details/126333030
 # https://blog.csdn.net/weixin_40883833/article/details/126333046
+
+'''
+そぼろ:
+	G:/MMD/mme/soboro/ExcellentShadow2
+
+
+'''

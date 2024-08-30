@@ -29,7 +29,7 @@ class Ui_mainWindow(object):
         self.not_classify_label.setGeometry(QtCore.QRect(20, 340, 281, 16))
         self.not_classify_label.setObjectName("not_classify_label")
         self.detailed_results_button = QtWidgets.QPushButton(self.centralwidget)
-        self.detailed_results_button.setGeometry(QtCore.QRect(640, 300, 141, 28))
+        self.detailed_results_button.setGeometry(QtCore.QRect(640, 260, 141, 28))
         self.detailed_results_button.setObjectName("detailed_results_button")
         self.help_label = QtWidgets.QLabel(self.centralwidget)
         self.help_label.setGeometry(QtCore.QRect(210, 10, 571, 181))
@@ -43,7 +43,7 @@ class Ui_mainWindow(object):
         self.result_browser.setGeometry(QtCore.QRect(20, 260, 601, 61))
         self.result_browser.setObjectName("result_browser")
         self.copy_button = QtWidgets.QPushButton(self.centralwidget)
-        self.copy_button.setGeometry(QtCore.QRect(640, 260, 141, 28))
+        self.copy_button.setGeometry(QtCore.QRect(640, 370, 141, 28))
         self.copy_button.setObjectName("copy_button")
         self.not_handle_browser = QtWidgets.QTextBrowser(self.centralwidget)
         self.not_handle_browser.setGeometry(QtCore.QRect(20, 370, 601, 201))
@@ -58,8 +58,11 @@ class Ui_mainWindow(object):
         self.emm_filename_browser.setGeometry(QtCore.QRect(100, 180, 521, 41))
         self.emm_filename_browser.setObjectName("emm_filename_browser")
         self.copy_detailed_results_button = QtWidgets.QPushButton(self.centralwidget)
-        self.copy_detailed_results_button.setGeometry(QtCore.QRect(640, 340, 141, 51))
+        self.copy_detailed_results_button.setGeometry(QtCore.QRect(640, 420, 141, 31))
         self.copy_detailed_results_button.setObjectName("copy_detailed_results_button")
+        self.copy_detailed_results_button_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.copy_detailed_results_button_2.setGeometry(QtCore.QRect(640, 320, 141, 31))
+        self.copy_detailed_results_button_2.setObjectName("copy_detailed_results_button_2")
         mainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(mainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -71,6 +74,7 @@ class Ui_mainWindow(object):
         self.detailed_results_button.clicked.connect(mainWindow.print_detailed_info) # type: ignore
         self.add_emm_button.clicked.connect(mainWindow.add_emm_files) # type: ignore
         self.copy_detailed_results_button.clicked.connect(mainWindow.copy_details_event) # type: ignore
+        self.copy_detailed_results_button_2.clicked.connect(mainWindow.copy_credit_list_event) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def retranslateUi(self, mainWindow):
@@ -81,8 +85,8 @@ class Ui_mainWindow(object):
         self.not_classify_label.setText(_translate("mainWindow", "未识别的mme/场景/模型，请检查一下:"))
         self.detailed_results_button.setText(_translate("mainWindow", "详细信息"))
         self.help_label.setText(_translate("mainWindow", "<html><head/><body><p>使用说明</p><p>1.←读入.emm文件，注意是.emm不是.pmm</p><p>2.下方出现生成结果，如有错误请在右边详细信息窗口修改</p><p>3.在生成过程中发现未登记的mme会弹出窗口，请编辑信息后选择是否录入</p><p>程序会把模型和场景文件一起识别，请自行选择忽略</p></body></html>"))
-        self.copy_button.setText(_translate("mainWindow", "复制到剪贴板"))
+        self.copy_button.setText(_translate("mainWindow", "复制作者列表"))
         self.emm_name_label.setText(_translate("mainWindow", "读取文件:"))
         self.add_emm_button.setText(_translate("mainWindow", "追加emm文件"))
-        self.copy_detailed_results_button.setText(_translate("mainWindow", "复制mme名列表\n"
-"到剪贴板"))
+        self.copy_detailed_results_button.setText(_translate("mainWindow", "复制mme名列表"))
+        self.copy_detailed_results_button_2.setText(_translate("mainWindow", "复制借物表格式"))

@@ -20,7 +20,7 @@ class Ui_Dialog(object):
         self.tips_label.setGeometry(QtCore.QRect(20, 20, 381, 21))
         self.tips_label.setObjectName("tips_label")
         self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 60, 701, 191))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 60, 701, 181))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.text_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.text_layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
@@ -54,6 +54,9 @@ class Ui_Dialog(object):
         self.choice_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.choice_layout.setContentsMargins(0, 0, 0, 0)
         self.choice_layout.setObjectName("choice_layout")
+        self.cancel_button = QtWidgets.QPushButton(self.gridLayoutWidget)
+        self.cancel_button.setObjectName("cancel_button")
+        self.choice_layout.addWidget(self.cancel_button, 1, 0, 1, 1)
         self.open_dir_button = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.open_dir_button.setObjectName("open_dir_button")
         self.choice_layout.addWidget(self.open_dir_button, 2, 0, 1, 1)
@@ -63,18 +66,11 @@ class Ui_Dialog(object):
         self.reset_text_button = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.reset_text_button.setObjectName("reset_text_button")
         self.choice_layout.addWidget(self.reset_text_button, 7, 0, 1, 1)
-        self.wait_handle_button = QtWidgets.QPushButton(self.gridLayoutWidget)
-        self.wait_handle_button.setObjectName("wait_handle_button")
-        self.choice_layout.addWidget(self.wait_handle_button, 9, 0, 1, 1)
-        self.cancel_button = QtWidgets.QPushButton(self.gridLayoutWidget)
-        self.cancel_button.setObjectName("cancel_button")
-        self.choice_layout.addWidget(self.cancel_button, 1, 0, 1, 1)
 
         self.retranslateUi(Dialog)
         self.cancel_button.clicked.connect(Dialog.ignore_item) # type: ignore
         self.open_dir_button.clicked.connect(Dialog.open_dir) # type: ignore
         self.add_item_button.clicked.connect(Dialog.add_item) # type: ignore
-        self.wait_handle_button.clicked.connect(Dialog.wait_handle) # type: ignore
         self.reset_text_button.clicked.connect(Dialog.reset_text) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
@@ -85,8 +81,7 @@ class Ui_Dialog(object):
         self.dirname_label.setText(_translate("Dialog", "文件目录名："))
         self.filename_label.setText(_translate("Dialog", "MME名："))
         self.writer_label.setText(_translate("Dialog", "<html><head/><body><p>作者名：（如有多个作者中间请用“/”分割）</p></body></html>"))
+        self.cancel_button.setText(_translate("Dialog", "这是场景/模型文件，忽略"))
         self.open_dir_button.setText(_translate("Dialog", "打开文件目录（有乱码会打不开）"))
         self.add_item_button.setText(_translate("Dialog", "添加至库中"))
         self.reset_text_button.setText(_translate("Dialog", "还原为默认内容"))
-        self.wait_handle_button.setText(_translate("Dialog", "稍后处理"))
-        self.cancel_button.setText(_translate("Dialog", "这是场景/模型文件，忽略"))
